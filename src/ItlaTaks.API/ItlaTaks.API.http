@@ -1,0 +1,6 @@
+@ItlaTaks.API_HostAddress = http://localhost:5036
+
+GET {{ItlaTaks.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
