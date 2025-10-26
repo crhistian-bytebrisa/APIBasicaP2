@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ItlaTaks.Domain\ItlaTaks.Domain.csproj" />
+    <ProjectReference Include="..\ItlaTaks.Infraestructure\ItlaTaks.Infraestructure.csproj" />
+  </ItemGroup>
+
 </Project>

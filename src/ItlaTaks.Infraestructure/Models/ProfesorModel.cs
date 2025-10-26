@@ -21,6 +21,9 @@ namespace ItlaTaks.Infraestructure.Models
         //Navegacion de la relacion muchos a muchos
         public List<ProfesorMateriaModel> ProfesorMaterias { get; set; }
 
+        //Navegacion de la relacion uno a muchos
+        public List<TareaModel> Tareas { get; set; }    
+
         public ProfesorModel()
         {
                 
