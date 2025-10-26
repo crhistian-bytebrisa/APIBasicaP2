@@ -18,19 +18,78 @@ namespace ItlaTaks.Infraestructure.Repositories
         {
         }
 
-        public async Task<ProfesorModel> GetByName(string name)
+        
+
+        public async Task<List<ProfesorModel>> GetAllByContainName(string name)
         {
             return await _context.Profesores
-           .FirstOrDefaultAsync(p => p.Nombre.Contains(name));
+                .Select(x => x)
+                .Where(p => p.Nombre.Contains(name))
+                .ToListAsync();
         }
 
-        public async Task<ProfesorModel> GetByMateriaId(int id)
+        public async Task<List<ProfesorModel>> GetAllByMateriaId(int id)
         {
             return await _context.Profesores
                 .Include(pm => pm.ProfesorMaterias)
                 .ThenInclude(m => m.Materia)
-                .FirstOrDefaultAsync(p => p.ProfesorMaterias.Any(pm => pm.MateriaId == id));
+                .Select(x => x)
+                .Where(p => p.ProfesorMaterias.Any(pm => pm.MateriaId == id))
+                .ToListAsync();
         }
+
+        public async Task<List<ProfesorModel>> GetAllWithDetails()
+        {
+            var entities = await _context.Profesores
+                .Include(pm => pm.ProfesorMaterias)
+                .ThenInclude(m => m.Materia)
+                .ToListAsync();
+
+            return entities;
+        }
+
+        public async Task<ProfesorModel> GetByIdWithDetails(int id)
+        {
+            var entity = await _context.Profesores
+                .Include(pm => pm.ProfesorMaterias)
+                .ThenInclude(m => m.Materia)
+                .Select(x => x)
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
+
+            return entity;
+        }
+
+        public override async Task<ProfesorModel> UpdateAsync(ProfesorModel entity)
+        {
+            var CurrentProfesorMateria = _context.ProfesorMaterias
+                .Select(x => x)
+                .Where(x => x.IdProfesor == entity.Id)
+                .ToList();
+
+            var Deleted = CurrentProfesorMateria
+                .Select(x => x)
+                .Where(pm => !entity.ProfesorMaterias.Any(e=> e.MateriaId == pm.MateriaId))
+                .ToList();
+
+            var Added = entity.ProfesorMaterias
+                .Where(e => !CurrentProfesorMateria.Any(pm => pm.MateriaId == e.MateriaId))
+                .Select(e => new ProfesorMateriaModel
+                {
+                    IdProfesor = entity.Id,
+                    MateriaId = e.MateriaId
+                })
+                .ToList();
+
+            _context.RemoveRange(Deleted);
+            _context.AddRange(Added);
+
+            _context.Profesores.Update(entity);
+
+            _context.SaveChanges();
+            return entity;
+        }
+
 
     }
 }

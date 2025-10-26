@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItlaTaks.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,11 +12,14 @@ namespace ItlaTaks.Infraestructure.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required,MaxLength(60),MinLength(10)]
         public string Nombre { get; set; }
+        [Required]
         public int Creditos { get; set; }
 
         //Navegacion de la relacion muchos a muchos
         public List<ProfesorMateriaModel> ProfesorMaterias { get; set; }
+        public List<TareaModel> Tareas { get; set; }
 
         public MateriaModel()
         {

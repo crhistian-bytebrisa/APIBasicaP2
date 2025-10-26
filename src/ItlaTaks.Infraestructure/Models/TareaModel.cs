@@ -1,5 +1,6 @@
 ﻿using ItlaTaks.Domain.Core;
 using ItlaTaks.Domain.Entities;
+using ItlaTaks.Infraestructure.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,8 +34,14 @@ namespace ItlaTaks.Infraestructure.Models
 
         [Required, ForeignKey("Profesor")]
         public int ProfesorId { get; set; }
-        public Profesor Profesor { get; set; }
+        public ProfesorModel Profesor { get; set; }
 
+        [Required, ForeignKey("Materia")]
+        public int MateriaId { get; set; }
+        public MateriaModel Materia { get; set; }
+
+        [Required]
+        public TareaEstado Estado { get; set; } = TareaEstado.PENDIENTE;
         public TareaModel()
         {
                 

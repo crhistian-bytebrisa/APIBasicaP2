@@ -4,6 +4,6 @@ namespace ItlaTaks.Infraestructure.Interfaces
 {
     public interface IMateriaRepository : IBaseRepository<MateriaModel>
     {
-        Task<MateriaModel> GetByNameAsync(string name);
+        Task<List<MateriaModel>> GetAllByContainName(string name);
     }
 }

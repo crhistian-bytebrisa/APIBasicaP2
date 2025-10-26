@@ -1,9 +1,12 @@
-﻿using ItlaTaks.Infraestructure.Models;
+﻿using ItlaTaks.Infraestructure.Interfaces;
+using ItlaTaks.Infraestructure.Models;
 
-namespace ItlaTaks.Infraestructure.Interfaces
+namespace ItlaTaks.Infraestructure.Repositories
 {
     public interface ITareasRepository : IBaseRepository<TareaModel>
     {
-        Task<List<TareaModel>> GetByProfesorIdAsync(int profesorId);
+        Task<List<TareaModel>> GetAllByProfesorIdAsync(int profesorId);
+        Task<List<TareaModel>> GetAllWithDetails();
+        Task<TareaModel> GetByIdWithDetails(int id);
     }
 }

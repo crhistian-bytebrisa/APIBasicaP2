@@ -12,10 +12,10 @@ namespace ItlaTaks.Infraestructure.Models
         [Key]
         public int Id { get; set; }
 
-        [Required, MaxLength(100)]
+        [Required, MaxLength(100), MinLength(3)]
         public string Nombre { get; set; }
 
-        [Required, MaxLength(150)]
+        [Required, MaxLength(150), MinLength(5)]
         public string Apellido { get; set; }
 
         //Navegacion de la relacion muchos a muchos

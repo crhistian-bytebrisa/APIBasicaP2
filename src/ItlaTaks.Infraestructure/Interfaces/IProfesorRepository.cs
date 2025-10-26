@@ -1,10 +1,13 @@
-﻿using ItlaTaks.Infraestructure.Models;
+﻿using ItlaTaks.Infraestructure.Interfaces;
+using ItlaTaks.Infraestructure.Models;
 
-namespace ItlaTaks.Infraestructure.Interfaces
+namespace ItlaTaks.Infraestructure.Repositories
 {
     public interface IProfesorRepository : IBaseRepository<ProfesorModel>
     {
-        Task<ProfesorModel> GetByMateriaId(int id);
-        Task<ProfesorModel> GetByName(string name);
+        Task<List<ProfesorModel>> GetAllByContainName(string name);
+        Task<List<ProfesorModel>> GetAllByMateriaId(int id);
+        Task<List<ProfesorModel>> GetAllWithDetails();
+        Task<ProfesorModel> GetByIdWithDetails(int id);
     }
 }
