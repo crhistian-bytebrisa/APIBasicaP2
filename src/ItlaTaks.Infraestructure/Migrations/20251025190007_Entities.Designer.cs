@@ -4,6 +4,7 @@ using ItlaTaks.Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItlaTaks.Infraestructure.Migrations
 {
     [DbContext(typeof(TaskContext))]
-    partial class TaskContextModelSnapshot : ModelSnapshot
+    [Migration("20251025190007_Entities")]
+    partial class Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,47 @@ namespace ItlaTaks.Infraestructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ItlaTaks.Domain.Entities.Materia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Creditos")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Materia");
+                });
+
+            modelBuilder.Entity("ItlaTaks.Domain.Entities.Profesor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profesor");
+                });
 
             modelBuilder.Entity("ItlaTaks.Infraestructure.Models.MateriaModel", b =>
                 {
@@ -35,8 +79,7 @@ namespace ItlaTaks.Infraestructure.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -97,16 +140,13 @@ namespace ItlaTaks.Infraestructure.Migrations
                     b.Property<bool>("EsGrupal")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FechaEntrega")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MateriaId")
+                    b.Property<int>("ProfesorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProfesorId")
+                    b.Property<int?>("ProfesorModelId")
                         .HasColumnType("int");
 
                     b.Property<int>("Puntos")
@@ -119,11 +159,26 @@ namespace ItlaTaks.Infraestructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MateriaId");
-
                     b.HasIndex("ProfesorId");
 
+                    b.HasIndex("ProfesorModelId");
+
                     b.ToTable("Tareas");
+                });
+
+            modelBuilder.Entity("MateriaProfesor", b =>
+                {
+                    b.Property<int>("MateriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProfesoresId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MateriaId", "ProfesoresId");
+
+                    b.HasIndex("ProfesoresId");
+
+                    b.ToTable("MateriaProfesor");
                 });
 
             modelBuilder.Entity("ItlaTaks.Infraestructure.Models.ProfesorMateriaModel", b =>
@@ -147,28 +202,38 @@ namespace ItlaTaks.Infraestructure.Migrations
 
             modelBuilder.Entity("ItlaTaks.Infraestructure.Models.TareaModel", b =>
                 {
-                    b.HasOne("ItlaTaks.Infraestructure.Models.MateriaModel", "Materia")
-                        .WithMany("Tareas")
-                        .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ItlaTaks.Infraestructure.Models.ProfesorModel", "Profesor")
-                        .WithMany("Tareas")
+                    b.HasOne("ItlaTaks.Domain.Entities.Profesor", "Profesor")
+                        .WithMany()
                         .HasForeignKey("ProfesorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Materia");
+                    b.HasOne("ItlaTaks.Infraestructure.Models.ProfesorModel", null)
+                        .WithMany("Tareas")
+                        .HasForeignKey("ProfesorModelId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Profesor");
+                });
+
+            modelBuilder.Entity("MateriaProfesor", b =>
+                {
+                    b.HasOne("ItlaTaks.Domain.Entities.Materia", null)
+                        .WithMany()
+                        .HasForeignKey("MateriaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ItlaTaks.Domain.Entities.Profesor", null)
+                        .WithMany()
+                        .HasForeignKey("ProfesoresId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ItlaTaks.Infraestructure.Models.MateriaModel", b =>
                 {
                     b.Navigation("ProfesorMaterias");
-
-                    b.Navigation("Tareas");
                 });
 
             modelBuilder.Entity("ItlaTaks.Infraestructure.Models.ProfesorModel", b =>

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItlaTaks.Application", "Itl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItlaTaks.API", "ItlaTaks.API\ItlaTaks.API.csproj", "{FEB6677A-3998-4690-8147-19EE9CCAB9A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{57EE2B24-CA44-4410-A88A-0215F4EAB338}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FEB6677A-3998-4690-8147-19EE9CCAB9A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEB6677A-3998-4690-8147-19EE9CCAB9A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEB6677A-3998-4690-8147-19EE9CCAB9A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57EE2B24-CA44-4410-A88A-0215F4EAB338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57EE2B24-CA44-4410-A88A-0215F4EAB338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57EE2B24-CA44-4410-A88A-0215F4EAB338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57EE2B24-CA44-4410-A88A-0215F4EAB338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

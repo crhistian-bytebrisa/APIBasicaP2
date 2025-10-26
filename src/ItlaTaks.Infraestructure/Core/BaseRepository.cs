@@ -1,5 +1,6 @@
 ﻿using ItlaTaks.Infraestructure.Context;
 using ItlaTaks.Infraestructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,37 +17,36 @@ namespace ItlaTaks.Infraestructure.Core
             _context = task;
         }
 
-        public Task<T> GetById(int id)
+        public async Task<T> GetById(int id)
         {
             var entity = _context.Set<T>().Find(id);
-            return Task.FromResult(entity);
+            return entity;
         }
 
-        public Task<List<T>> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            var entities = _context.Set<T>().ToList();
-            return Task.FromResult(entities);
+            var entities = await _context.Set<T>().ToListAsync();
+            return entities;
         }
 
-        public Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             _context.Set<T>().Add(entity);
             _context.SaveChanges();
-            return Task.FromResult(entity);
+            return entity;
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
             _context.Set<T>().Update(entity);
             _context.SaveChanges();
-            return Task.FromResult(entity);
+            return entity;
         }
 
-        public Task DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity)
         {
             _context.Set<T>().Remove(entity);
             _context.SaveChanges();
-            return Task.CompletedTask;
         }
     }
 }

@@ -44,5 +44,7 @@ namespace ItlaTaks.Infraestructure.Context
         public DbSet<ProfesorModel> Profesores { get; set; }
         public DbSet<MateriaModel> Materias { get; set; }
 
+        public DbSet<TareaModel> Tareas { get; set; }
+
         }
 }

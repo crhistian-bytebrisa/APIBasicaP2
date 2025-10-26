@@ -18,9 +18,12 @@ namespace ItlaTaks.Infraestructure.Repositories
         {
         }
 
-        public async Task<MateriaModel> GetByNameAsync(string name)
+        public async Task<List<MateriaModel>> GetAllByContainName(string name)
         {
-            return await _context.Materias.FirstOrDefaultAsync(x => x.Nombre == name);
+            return await _context.Materias
+                .Select(x => x)
+                .Where(x => x.Nombre.Contains(name))
+                .ToListAsync();
         }
     }
 }
