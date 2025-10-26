@@ -1,4 +1,5 @@
-﻿using ItlaTaks.Application.DTOs;
+﻿using ItlaTaks.Application.Contract;
+using ItlaTaks.Application.DTOs;
 using ItlaTaks.Application.DTOs.CreateDTO;
 using ItlaTaks.Infraestructure.Exceptions;
 using ItlaTaks.Infraestructure.Interfaces;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ItlaTaks.Application.Services
 {
-    public class TareaService
+    public class TareaService : ITareaService
     {
         private readonly ITareasRepository _repository;
 
@@ -27,6 +28,7 @@ namespace ItlaTaks.Application.Services
             var list = _repository.GetAll().Adapt<List<TareaDTO>>();
             return list;
         }
+
         public async Task<TareaDTO> GetById(int id)
         {
             var entity = await _repository.GetById(id);
@@ -54,7 +56,7 @@ namespace ItlaTaks.Application.Services
 
             if (entity == null)
             {
-                throw new MateriaException("No se encontro la tarea en la base de datos.");
+                throw new TareaException("No se encontro la tarea en la base de datos.");
             }
 
             var ent = entity.Adapt<TareaModel>();

@@ -1,4 +1,5 @@
-﻿using ItlaTaks.Application.DTOs;
+﻿using ItlaTaks.Application.Contract;
+using ItlaTaks.Application.DTOs;
 using ItlaTaks.Application.DTOs.CreateDTO;
 using ItlaTaks.Infraestructure.Exceptions;
 using ItlaTaks.Infraestructure.Interfaces;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ItlaTaks.Application.Services
 {
-    public class ProfesorService
+    public class ProfesorService : IProfesorService
     {
         private readonly IProfesorRepository _repository;
 
@@ -54,7 +55,7 @@ namespace ItlaTaks.Application.Services
 
             if (entity == null)
             {
-                throw new MateriaException("No se encontro al profesor en la base de datos.");
+                throw new ProfesorException("No se encontro al profesor en la base de datos.");
             }
 
             var ent = entity.Adapt<ProfesorModel>();

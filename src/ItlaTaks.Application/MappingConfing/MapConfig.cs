@@ -15,7 +15,7 @@ namespace ItlaTaks.Application.MappingConfing
     {
         public void RegisterMappins()
         {
-            //Encargado de convertir los MateriasIds (Lista de enteros), en ProfesorMaterias (Tabla con dos ID materiaID y profesorID)
+            //Encargados de convertir a la lista de enteros en ProfesorMateriaModel
             TypeAdapterConfig<ProfesorCDTO, ProfesorModel>.NewConfig()
                 .Map(
                     dest => dest.ProfesorMaterias,
@@ -32,7 +32,7 @@ namespace ItlaTaks.Application.MappingConfing
                         : new List<ProfesorMateriaModel>()
                         );
 
-            //Encargado de convertir los ProfeMaterias en Materias (DTOs de las mismas materias)
+            //Encargado de separar los datos de ProfesorMaterias en su Id (MateriaId) y su MateriaDTO (Materia pero convertida a DTO).
             TypeAdapterConfig<ProfesorModel, ProfesorDTO>.NewConfig()
                 .Map(
                     dest => dest.Materias,
@@ -47,6 +47,7 @@ namespace ItlaTaks.Application.MappingConfing
                         : new List<int>()
                 );
 
+            //Encargado de convertir los datos adicionales de TareaModel en sus respectivos DTO (Materia y Profesor en este caso).
             TypeAdapterConfig<TareaModel, TareaDTO>.NewConfig()
                .Map(
                    dest => dest.Profesor,

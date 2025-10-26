@@ -31,8 +31,6 @@ namespace ItlaTaks.Application.Validations.Create
             RuleFor(x => x.MateriaIds)
                 .NotEmpty().WithMessage("No puedes dejar el campo {PropertyName} en blanco.")                          
                 .Must(verificateMaterias).WithMessage("Algunas de las {PropertyName} no tienen coincidencias con los registros del sistema.");
-
-
         }
 
         private bool verificateMaterias(List<int> ids)
